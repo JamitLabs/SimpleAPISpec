@@ -19,20 +19,18 @@ For Success the one-object structure looks like the following:
 
 ``` json
 {
-    "type": "User",
-    "id": "783",
-    "data": {
-        "firstName": "John",
-        "lastName": "Appleseed",
-        "createdChallenges": [
-            { "type": "Challenge", "id": "72" },
-            { "type": "Challenge", "id": "73" },
-            { "type": "Challenge", "id": "74" },            
-        ],
-        "department": {
-            "type": "CompanyDepartment",
-            "id": "3"
-        }
+    "typeName": "User",
+    "identifier": "783",
+    "firstName": "John",
+    "lastName": "Appleseed",
+    "createdChallenges": [
+        { "typeName": "Challenge", "identifier": "72" },
+        { "typeName": "Challenge", "identifier": "73" },
+        { "typeName": "Challenge", "identifier": "74" },            
+    ],
+    "department": {
+        "typeName": "CompanyDepartment",
+        "identifier": "3"
     }
 }
 ```
@@ -42,32 +40,30 @@ The multiple-object structure looks the same, except that the top level object i
 ``` json
 [
     {
-        "type": "User",
-        "id": "783",
-        "data": {
-            "firstName": "John",
-            "lastName": "Appleseed",
-            "createdChallenges": [
-                { "type": "Challenge", "id": "72" },
-                { "type": "Challenge", "id": "73" },
-                { "type": "Challenge", "id": "74" },            
-            ],
-            "department": {
-                "type": "CompanyDepartment",
-                "id": "3"
-            }
+        "typeName": "User",
+        "identifier": "783",
+        "firstName": "John",
+        "lastName": "Appleseed",
+        "createdChallenges": [
+            { "typeName": "Challenge", "identifier": "72" },
+            { "typeName": "Challenge", "identifier": "73" },
+            { "typeName": "Challenge", "identifier": "74" },            
+        ],
+        "department": {
+            "typeName": "CompanyDepartment",
+            "identifier": "3"
         }
     },
-    { "type": "User", "id": "784", "data": { ... } },
-    { "type": "User", "id": "785", "data": { ... } },
+    { "typeName": "User", "identifier": "784", "firstName": "..." },
+    { "typeName": "User", "identifier": "785", "firstName": "..." },
 ]
 ```
 
 Specifically note the following:
 
-- The `type` and `id` are required fields on responses.
-- The `type` must be titlecased like class names usually are
-- All attributes and relationships can be found under `data`
+- The `typeName` and `identifier` are required fields on responses.
+- The `typeName` must be titlecased like class names usually are
+- All attributes and relationships are added at the same level
 
 For Bad Request it has always this structure:
 
@@ -90,7 +86,7 @@ Specifically note the following:
 
 ### Include Relationships
 
-If you want to include the data of relationships, then simply add an `include` to your request and list all relationship names to include separated by a comma. For example:
+If you want to include detailed fields of relationships, then simply add an `include` to your request and list all relationship names to include separated by a comma. For example:
 
 Request: `/user/783?include=createdChallenges,department`
 
@@ -98,37 +94,30 @@ Response:
 
 ``` json
 {
-    "type": "User",
-    "id": "783",
-    "data": {
-        "firstName": "John",
-        "lastName": "Appleseed",
-        "createdChallenges": [
-            { "type": "Challenge", "id": "72" },
-            { "type": "Challenge", "id": "73" },
-            { "type": "Challenge", "id": "74" },            
-        ],
-        "department": {
-            "type": "CompanyDepartment",
-            "id": "3",
-            "data": {
-                "name": "iOS Development",
-                "company": {
-                    "type": "Company",
-                    "id": "75"
-                },
-                "members": [
-                    { "type": "User", "id": "783" },
-                    { "type": "User", "id": "51" },
-                    { "type": "User", "id": "477" }
-                ]
-            }
-        }
+    "typeName": "User",
+    "identifier": "783",
+    "firstName": "John",
+    "lastName": "Appleseed",
+    "createdChallenges": [
+        { "typeName": "Challenge", "identifier": "72" },
+        { "typeName": "Challenge", "identifier": "73" },
+        { "typeName": "Challenge", "identifier": "74" },            
+    ],
+    "department": {
+        "typeName": "CompanyDepartment",
+        "identifier": "3",
+        "name": "iOS Development",
+        "company": { "typeName": "Company", "identifier": "75" },
+        "members": [
+            { "typeName": "User", "identifier": "783" },
+            { "typeName": "User", "identifier": "51" },
+            { "typeName": "User", "identifier": "477" }
+        ]
     }
 }
 ```
 
-Note how the `createdChallenges` and the `department` now have their `data` included as well. You can see though that in the `department` data there's also a `company` and some `members` defined without a `data` field. How do you get the data from those?
+Note how the `createdChallenges` and the `department` now have their detailed properties included as well. You can see though that in the `department` there's also a `company` and some `members` defined without their detailed fields. How do you get them on those?
 
 Just specify them separated by a dot like so in your request:
 

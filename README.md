@@ -23,11 +23,7 @@ For Success the one-object structure looks like the following:
     "identifier": "783",
     "firstName": "John",
     "lastName": "Appleseed",
-    "createdChallenges": [
-        { "typeName": "Challenge", "identifier": "72" },
-        { "typeName": "Challenge", "identifier": "73" },
-        { "typeName": "Challenge", "identifier": "74" },            
-    ],
+    "createdChallengesCount": 4,
     "department": {
         "typeName": "CompanyDepartment",
         "identifier": "3"
@@ -44,11 +40,7 @@ The multiple-object structure looks the same, except that the top level object i
         "identifier": "783",
         "firstName": "John",
         "lastName": "Appleseed",
-        "createdChallenges": [
-            { "typeName": "Challenge", "identifier": "72" },
-            { "typeName": "Challenge", "identifier": "73" },
-            { "typeName": "Challenge", "identifier": "74" },            
-        ],
+        "createdChallengesCount": 4,
         "department": {
             "typeName": "CompanyDepartment",
             "identifier": "3"
@@ -61,9 +53,9 @@ The multiple-object structure looks the same, except that the top level object i
 
 Specifically note the following:
 
-- The `typeName` and `identifier` are required fields on responses.
-- The `typeName` must be titlecased like class names usually are
-- All attributes and relationships are added at the same level
+- The `typeName` and `identifier` are required fields amongst all responses.
+- The `typeName` must be titlecased like class names usually are.
+- Attributes and relationships are presented at the same level.
 
 For Bad Request it has always this structure:
 
@@ -136,9 +128,9 @@ A client can specify the requested page by two ways:
 1. Provide a `page[num]` and optionally a `page[size]`
 2. Provide a `page[offset]` and optionally a `page[limit]`
 
-A server can simply convert one way to the other to fulfil both requirements.
+A server can simply convert one way to the other to fulfil both requirements. Alternatively it can choose one strategy explicitly.
 
-Note that pagination doesn't work with the `include` instruction.
+Note that pagination doesn't work on related objects with the `include` instruction.
 
 ### Sorting
 
@@ -204,3 +196,5 @@ Specifically note the following:
 - The response is always a hash and directly contains the attributes.
 - Editable to-one relations are referenced directly by their id.
 - Editable to-many relations are not listed at all. They must be placed under their own endpoint.
+
+The response of the server for POST, PUT or PATCH requests must include the entire object as if a GET request on the specific object was made.

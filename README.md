@@ -183,14 +183,14 @@ When sending POST, PUT or PATCH requests to create or update data on the server,
 {
     "firstName": "John",
     "lastName": "Appleseed",
-    "departmentId": "308"
+    "department": { "typeName": "Department", "identifier": "72" }
 }
 ```
 
 Specifically note the following:
 
 - The response is always a hash and directly contains the attributes.
-- Editable to-one relations are referenced directly by their id.
+- Editable to-one relations are referenced by their minimum properties object type (other properties will be ignored).
 - Editable to-many relations are not listed at all. They must be placed under their own endpoint.
 
 The response of the server for POST, PUT or PATCH requests must include the entire object as if a GET request on the specific object was made.

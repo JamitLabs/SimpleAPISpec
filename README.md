@@ -61,6 +61,8 @@ Specifically note the following:
 - The `typeName` and `identifier` are required fields amongst all responses.
 - The `typeName` must be titlecased like class names usually are.
 - Attributes and relationships are presented at the same level.
+- To-one relationships by default only include the `typeName` and `identifier` fields.
+- To-many relationships by default are not included, instead a `<relationName>Count` integer value is returned.
 
 For Bad Request it has always this structure:
 

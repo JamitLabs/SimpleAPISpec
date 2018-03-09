@@ -100,20 +100,16 @@ Response:
         "identifier": "3",
         "name": "iOS Development",
         "company": { "typeName": "Company", "identifier": "75" },
-        "members": [
-            { "typeName": "User", "identifier": "783" },
-            { "typeName": "User", "identifier": "51" },
-            { "typeName": "User", "identifier": "477" }
-        ]
+        "membersCount": 3
     }
 }
 ```
 
-Note how the `createdChallenges` and the `department` now have their detailed properties included as well. You can see though that in the `department` there's also a `company` and some `members` defined without their detailed fields. How do you get them on those?
+Note how the `department` now has its detailed properties included as well and the `createdChallenges` (because it's an array) includes the `identifier`s. You can see though that in the `department` there's also a `company` and some `members` defined without their detailed fields. How do you get them on those?
 
 Just specify them separated by a dot like so in your request:
 
-Request: `/user/783?include=department.company,members`
+Request: `/user/783?include=department.company,department.members`
 
 Note that you can not chain them once more, so the maximum level of depth is 3 including the top level object. Also beware that there's no pagination available for included relationships.
 

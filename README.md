@@ -8,6 +8,11 @@ A client must always send the locale it's running in with the HTTP Header field 
 
 `Accept-Language: en-US` or `Accept-Language: en`
 
+A client must send requests with the value `application/vnd.simple-api+json` in the `Accept` header.
+If there is a body the client must set the value `application/vnd.simple-api+json` also to the `Content-Type` header.
+
+A server must respond with the `application/vnd.simple-api+json` in the `Content-Type` header.
+
 ## Basic Response Structure
 
 There are two different cases for response objects:

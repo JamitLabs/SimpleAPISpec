@@ -28,7 +28,10 @@ For Success the one-object structure looks like the following:
     "identifier": "783",
     "firstName": "John",
     "lastName": "Appleseed",
-    "createdChallengesCount": 4,
+    "createdChallenges": {
+      "typeName": "Challenge",
+      "count": 4
+    },
     "department": {
         "typeName": "CompanyDepartment",
         "identifier": "3"
@@ -45,14 +48,25 @@ The multiple-object structure looks the same, except that the top level object i
         "identifier": "783",
         "firstName": "John",
         "lastName": "Appleseed",
-        "createdChallengesCount": 4,
+        "createdChallenges": {
+          "typeName": "Challenge",
+          "count": 4
+        },
         "department": {
             "typeName": "CompanyDepartment",
             "identifier": "3"
         }
     },
-    { "typeName": "User", "identifier": "784", "firstName": "..." },
-    { "typeName": "User", "identifier": "785", "firstName": "..." },
+    {
+      "typeName": "User",
+      "identifier": "784",
+      "data": { "firstName": "..." }
+    },
+    {
+      "typeName": "User",
+      "identifier": "785",
+      "data": { "firstName": "..." }
+    },
 ]
 ```
 
@@ -62,7 +76,7 @@ Specifically note the following:
 - The `typeName` must be titlecased like class names usually are.
 - Attributes and relationships are presented at the same level.
 - To-one relationships by default only include the `typeName` and `identifier` fields.
-- To-many relationships by default are not included, instead a `<relationName>Count` integer value is returned.
+- To-many relationships by default only include the `typeName` and `count` fields.
 
 For Bad Request it has always this structure:
 
@@ -95,19 +109,26 @@ Response:
 {
     "typeName": "User",
     "identifier": "783",
-    "firstName": "John",
-    "lastName": "Appleseed",
-    "createdChallenges": [
-        { "typeName": "Challenge", "identifier": "72" },
-        { "typeName": "Challenge", "identifier": "73" },
-        { "typeName": "Challenge", "identifier": "74" },            
-    ],
-    "department": {
-        "typeName": "CompanyDepartment",
-        "identifier": "3",
-        "name": "iOS Development",
-        "company": { "typeName": "Company", "identifier": "75" },
-        "membersCount": 3
+    "data": {
+      "firstName": "John",
+      "lastName": "Appleseed",
+      "createdChallenges": [
+          { "typeName": "Challenge", "identifier": "72" },
+          { "typeName": "Challenge", "identifier": "73" },
+          { "typeName": "Challenge", "identifier": "74" },            
+      ],
+      "department": {
+          "typeName": "CompanyDepartment",
+          "identifier": "3",
+          "data": {
+            "name": "iOS Development",
+            "company": { "typeName": "Company", "identifier": "75" },
+            "members": {
+              "typeName": "User",
+              "count": 3
+            }
+          }
+      }
     }
 }
 ```
@@ -184,7 +205,7 @@ For filterable attributes of numerical type (Integer, Float, Double) or of a dat
 
 ## Request Body
 
-When sending POST, PUT or PATCH requests to create or update data on the server, clients must use the following structure:
+When sending POST, PUT or PATCH requests to create or update data on the server, clients must use the following structure (note that it matches exactly the `data` field in responses):
 
 ``` json
 {

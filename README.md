@@ -26,15 +26,17 @@ For Success the one-object structure looks like the following:
 {
     "typeName": "User",
     "identifier": "783",
-    "firstName": "John",
-    "lastName": "Appleseed",
-    "createdChallenges": {
-      "typeName": "Challenge",
-      "count": 4
-    },
-    "department": {
-        "typeName": "CompanyDepartment",
-        "identifier": "3"
+    "data": {
+        "firstName": "John",
+        "lastName": "Appleseed",
+        "createdChallenges": {
+          "typeName": "Challenge",
+          "count": 4
+        },
+        "department": {
+            "typeName": "CompanyDepartment",
+            "identifier": "3"
+        }
     }
 }
 ```
@@ -46,26 +48,28 @@ The multiple-object structure looks the same, except that the top level object i
     {
         "typeName": "User",
         "identifier": "783",
-        "firstName": "John",
-        "lastName": "Appleseed",
-        "createdChallenges": {
-          "typeName": "Challenge",
-          "count": 4
-        },
-        "department": {
-            "typeName": "CompanyDepartment",
-            "identifier": "3"
+        "data": {
+            "firstName": "John",
+            "lastName": "Appleseed",
+            "createdChallenges": {
+              "typeName": "Challenge",
+              "count": 4
+            },
+            "department": {
+                "typeName": "CompanyDepartment",
+                "identifier": "3"
+            }
         }
     },
     {
-      "typeName": "User",
-      "identifier": "784",
-      "data": { "firstName": "..." }
+        "typeName": "User",
+        "identifier": "784",
+        "data": { "firstName": "..." }
     },
     {
-      "typeName": "User",
-      "identifier": "785",
-      "data": { "firstName": "..." }
+        "typeName": "User",
+        "identifier": "785",
+        "data": { "firstName": "..." }
     },
 ]
 ```
